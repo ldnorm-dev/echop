@@ -36,6 +36,7 @@ func getEncoder() zapcore.Encoder {
 	return zapcore.NewJSONEncoder(encoderConfig)
 }
 
+// GetAppRunPath returns the path where the app is running.
 func GetAppRunPath() (runPath string) {
 	ex, err := os.Executable()
 	if err != nil {

@@ -17,9 +17,11 @@ type (
 )
 
 var (
+	// AppName is the name of the application, which will be used in log file name
 	AppName = "echop"
 	// RequestIDConfig middleware.RequestIDWithConfig
-	RequestIDConfig     = middleware.DefaultRequestIDConfig
+	RequestIDConfig = middleware.DefaultRequestIDConfig
+	// RequestLoggerConfig middleware.RequestLoggerConfig
 	RequestLoggerConfig = middleware.RequestLoggerConfig{
 		LogURI:      true,
 		LogStatus:   true,
