@@ -1,6 +1,8 @@
-# echop
+# Echop
 
-echop is a wrapper of echo framework, which provides some useful features.
+[![Go Reference](https://pkg.go.dev/badge/echop.ldnorm.dev.svg)](https://pkg.go.dev/echop.ldnorm.dev)
+
+Echop is a wrapper of echo framework, which provides some useful features.
 
 ## Feature Overview
 
@@ -15,6 +17,8 @@ echop is a wrapper of echo framework, which provides some useful features.
 ```shell
 go get -u echop.ldnorm.dev
 ```
+
+## [Document](https://pkg.go.dev/echop.ldnorm.dev)
 
 ## Example
 
