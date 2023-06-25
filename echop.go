@@ -40,7 +40,7 @@ var (
 			}
 			logFunc(
 				c, "request",
-				zap.String("request_id", GetRequestId(c)),
+				zap.String("request_id", GetRequestID(c)),
 				zap.String("method", v.URI),
 				zap.String("method", v.Method),
 				zap.String("remote_ip", v.RemoteIP),
@@ -67,7 +67,7 @@ func OverrideContext() echo.MiddlewareFunc {
 	}
 }
 
-func GetRequestId(c echo.Context) (id string) {
+func GetRequestID(c echo.Context) (id string) {
 	id = c.Request().Header.Get(RequestIDConfig.TargetHeader)
 	if id == "" {
 		id = c.Response().Header().Get(RequestIDConfig.TargetHeader)

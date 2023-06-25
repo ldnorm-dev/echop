@@ -74,7 +74,7 @@ func log(logInfo LoggerFields) (string, []zap.Field) {
 	}
 	fields := append(logInfo.Fields)
 	if logInfo.C != nil {
-		fields = append(fields, zap.String(RequestIDConfig.TargetHeader, GetRequestId(logInfo.C)))
+		fields = append(fields, zap.String(RequestIDConfig.TargetHeader, GetRequestID(logInfo.C)))
 	}
 	return logInfo.Msg, fields
 }
