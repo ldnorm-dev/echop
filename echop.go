@@ -13,6 +13,12 @@ type (
 	Echop struct {
 		*echo.Echo
 	}
+	// CurrentUser Get info about the user who initiated the request
+	CurrentUser struct {
+		ID       uint64 `json:"userID"`
+		Name     string `json:"name"`
+		Nickname string `json:"nickname"`
+	}
 	HandlerFunc func(c Context) error
 )
 
@@ -20,7 +26,8 @@ var (
 	// AppName is the name of the application, which will be used in log file name
 	AppName = "echop"
 	// RequestIDConfig middleware.RequestIDWithConfig
-	RequestIDConfig = middleware.DefaultRequestIDConfig
+	RequestIDConfig                                           = middleware.DefaultRequestIDConfig
+	GetCurrentUser  func(c echo.Context) (CurrentUser, error) = nil
 	// RequestLoggerConfig middleware.RequestLoggerConfig
 	RequestLoggerConfig = middleware.RequestLoggerConfig{
 		LogURI:      true,
@@ -38,14 +45,29 @@ var (
 			} else {
 				logFunc = LogInfoWithContext
 			}
-			logFunc(
-				c, "request",
+
+			logFields := []zap.Field{
 				zap.String("request_id", GetRequestID(c)),
 				zap.String("method", v.URI),
 				zap.String("method", v.Method),
 				zap.String("remote_ip", v.RemoteIP),
 				zap.String("host", v.Host),
 				zap.String("latency", v.Latency.String()),
+			}
+
+			var currentUser CurrentUser
+			if GetCurrentUser != nil {
+				currentUser, _ = GetCurrentUser(c)
+			}
+			if currentUser.ID > 0 {
+				logFields = append(logFields, zap.Uint64("operator_id", currentUser.ID))
+			}
+			if currentUser.Name != "" {
+				logFields = append(logFields, zap.String("operator_name", currentUser.Name))
+			}
+			logFunc(
+				c, "request",
+				logFields...,
 			)
 			return nil
 		},
